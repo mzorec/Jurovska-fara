@@ -12,7 +12,7 @@ namespace Vortex.Controllers
     {
         public IHttpActionResult Register(User user)
         {
-            return new NotImplementedException()
+            throw new NotImplementedException();
         }
 
         public IHttpActionResult Login(string userName, string password)
