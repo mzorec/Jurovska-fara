@@ -13,7 +13,8 @@ namespace Vortex.Database.Mappings
         {
             Table("Users");
             Id(m => m.Id).GeneratedBy.HiLo("NH_Hilo", "Users_Next_Hi", "200");
-            Map(m => m.Username).Not.Nullable().Length(80);
+            Map(m => m.Username).Not.Nullable().Length(190);
+            Map(m => m.Email).Nullable().Length(80);
         }
     }
 }

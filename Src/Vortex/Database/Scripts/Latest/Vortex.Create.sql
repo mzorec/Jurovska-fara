@@ -5,7 +5,8 @@
 
     create table Users (
         Id BIGINT not null,
-       Username NVARCHAR(80) not null,
+       Username NVARCHAR(190) not null,
+       Email NVARCHAR(80) null,
        primary key (Id)
     )
 

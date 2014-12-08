@@ -8,7 +8,7 @@ using Vortex.Database.Models;
 
 namespace Vortex.Database.Repository
 {
-    public interface IUserRepositoy
+    public interface IUserRepository
     {
         User GetUser(long id);
 

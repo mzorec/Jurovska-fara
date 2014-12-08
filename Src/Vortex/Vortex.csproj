@@ -92,17 +92,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Mappings\UserMap.cs" />
     <Compile Include="Database\Models\EntityBase.cs" />
     <Compile Include="Database\Models\User.cs" />
+    <Compile Include="Database\Repository\IUserRepository.cs" />
     <Compile Include="Database\Repository\RepositoryBase.cs" />
     <Compile Include="Database\Repository\SessionClosedException.cs" />
+    <Compile Include="Database\Repository\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\INhibernateSqlScriptExecutor.cs" />
     <Compile Include="Infrastructure\NhibernateSqlScriptExecutor.cs" />
+    <Compile Include="Infrastructure\VortexInstaller.cs" />
     <Compile Include="ITimeProvider.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

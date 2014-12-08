@@ -7,7 +7,7 @@ using Vortex.Database.Models;
 
 namespace Vortex.Database.Repository
 {
-    public class UserRepository : RepositoryBase<User>, IUserRepositoy
+    public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         public UserRepository(ISession session, ITimeProvider timeProvider) : base(session, timeProvider)
         {
