@@ -10,14 +10,9 @@ namespace Vortex.Controllers
 {
     public class UserController : ApiController
     {
-        public IHttpActionResult Register(User user)
+        public User Login()
         {
-            throw new NotImplementedException();
-        }
-
-        public IHttpActionResult Login(string userName, string password)
-        {
-            return Ok();
+            return new User { UserName =  "test " };
         }
     }
 }
