@@ -59,7 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vortex.csproj">
+    <ProjectReference Include="..\Vortex\Vortex.csproj">
       <Project>{53015faa-8fc2-4451-ad0c-1e0ecc9d06e2}</Project>
       <Name>Vortex</Name>
     </ProjectReference>
