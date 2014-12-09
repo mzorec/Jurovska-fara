@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Vortex.Tests.Learning
 {
-    class CalculatorTests 
+    class CalculatorTests
     {
 
         [Test]
-        public void Zracune()
+        public void CalculateTest()
         {
-           ICalculator calc = new Calculator();
-            int result = calc.izracunaj(1, 2);
-            Assert.AreEqual(3, result);
+            ICalculator calc = new Calculator();
+            int result = calc.Calculate("3 + 5");
+            Assert.AreEqual(8, result);
         }
-       
+
     }
 }

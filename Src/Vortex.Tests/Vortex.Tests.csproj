@@ -52,8 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExampleTests.cs" />
-    <Compile Include="Learning\Class1.cs" />
+    <Compile Include="Learning\Calculator.cs" />
     <Compile Include="Learning\CalculatorTests.cs" />
+    <Compile Include="Learning\iCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
