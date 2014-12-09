@@ -10,3 +10,13 @@ Src/Vortex/Vortex.v11.suo
 Src/Vortex/Web.Debug.config
 Src/Vortex/obj/Debug/Vortex.dll
 Src/Vortex/obj/Debug/Vortex.pdb
+/Src/Vortex/bin
+/Src/Vortex/obj
+/Src/Vortex/Vortex.sln.DotSettings.user
+/Src/Vortex.ConsoleApplication/bin
+/Src/Vortex.ConsoleApplication/obj
+/Src/Vortex.Tests/bin
+/Src/Vortex.Tests/obj
+/Src/Vortex.v11.suo
+/Src/Vortex.Tests/Vortex.Tests.csproj.user
+/Src/Vortex.sln.DotSettings.user
