@@ -18,14 +18,13 @@ namespace Vortex.Tests
         {
            var model =  Register(new User() { Davcna = "5"});
             Assert.AreEqual(5, model.Davcna);
-            Assert.AreEqual("Ok", model.Status);
         }
 
         [Test]
         public void WrongDavcnaFormat()
         {
             var model = Register(new User() { Davcna = "aa" });
-            Assert.AreEqual("validation failed", model.Status);
+         
         }
 
         public Database.Models.User Register(User user)
@@ -39,10 +38,6 @@ namespace Vortex.Tests
             if (int.TryParse(user.Davcna, out davcna))
             {
                 dbUserModel.Davcna = davcna;
-            }
-            else
-            {
-                dbUserModel.Status = "validation failed";
             }
 
             return dbUserModel;

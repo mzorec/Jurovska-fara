@@ -37,7 +37,7 @@ namespace Vortex.Tests
           out string dbUsername,
           out string dbPassword)
         {
-            const string DataFileName = @"..\..\..\DBConnectionData.txt";
+            const string DataFileName = @"..\..\..\Vortex\DBConnectionData.txt";
 
             if (File.Exists(DataFileName))
             {

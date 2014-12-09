@@ -1,5 +1,5 @@
 This file should contain your database connection data. Stick to the following format or the thing will fail!
 server : GEMAJ
-database : LOYALITY
+database : VORTEX
 username : sa
 password : jungle

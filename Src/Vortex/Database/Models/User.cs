@@ -13,8 +13,5 @@ namespace Vortex.Database.Models
         public virtual string Email { get; set; }
 
         public virtual int Davcna { get; set; }
-
-        public string Status { get; set; }
-
     }
 }
