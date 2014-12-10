@@ -118,7 +118,8 @@
     </Compile>
     <Compile Include="Infrastructure\INhibernateSqlScriptExecutor.cs" />
     <Compile Include="Infrastructure\NhibernateSqlScriptExecutor.cs" />
-    <Compile Include="Infrastructure\VortexInstaller.cs" />
+    <Compile Include="Infrastructure\Windsor\VortexInstaller.cs" />
+    <Compile Include="Infrastructure\Windsor\WindsorCompositionRoot.cs" />
     <Compile Include="ITimeProvider.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

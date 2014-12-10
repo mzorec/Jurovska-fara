@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -15,7 +11,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using Vortex.Database.Mappings;
 
-namespace Vortex.Infrastructure
+namespace Vortex.Infrastructure.Windsor
 {
     public class LoyaltyCoreWindsorInstaller : IDisposable
     {
