@@ -10,29 +10,27 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using Vortex.Database.Mappings;
+using Vortex.Database.Repository;
 
 namespace Vortex.Infrastructure.Windsor
 {
-    public class LoyaltyCoreWindsorInstaller : IDisposable
+    public class VortexInstaller : IWindsorInstaller
     {
-        public LoyaltyCoreWindsorInstaller()
+        public VortexInstaller()
         {
-            DbConnectionFilePath = "..\\..\\..\\DBConnectionData.txt";
+            DbConnectionFilePath = "..\\..\\DBConnectionData.txt";
         }
 
-        public LoyaltyCoreWindsorInstaller(string dbConnectionFilePath)
+        public VortexInstaller(string dbConnectionFilePath)
         {
             DbConnectionFilePath = dbConnectionFilePath;
         }
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            ////container.Register(Component.For<ICoreConfiguration>().ImplementedBy<CoreConfiguration>().Start());
-            ////container.Register(Component.For<IApplicationInfo>().ImplementedBy<ApplicationInfo>());
-            ////container.Register(Component.For<IKeyValueStore>().ImplementedBy<SimpleKeyValueStore>().Named("KeyValueStore"));
             container.Register(Component.For<ITimeProvider>().ImplementedBy<TimeProvider>());
-          
-            //container.Register(Component.For<IRepositoryFactory>().ImplementedBy<RepositoryFactory>().LifeStyle.Singleton);
+            container.Register(
+                Component.For<IRepositoryFactory>().ImplementedBy<RepositoryFactory>().LifeStyle.Singleton);
 
             ISessionFactory nhibernateSessionFactory = CreateSessionFactory(container);
             container.Register(Component.For<ISessionFactory>().Instance(nhibernateSessionFactory));
@@ -69,27 +67,18 @@ namespace Vortex.Infrastructure.Windsor
         {
             string server, name, username, password;
 
-            bool integratedAuth = false;
-
             //log.DebugFormat("development mode: {0}", IsInDevelopmentMode);
 
-           
             GetDBConnectionDataFromFile(out server, out name, out username, out password);
 
             return Fluently.Configure()
-                .Database(
-                integratedAuth ?
-                MsSqlConfiguration.MsSql2008
-                              .ConnectionString(c => c.Server(server)
-                                                         .Database(name)
-                                                         .TrustedConnection())
-                  : MsSqlConfiguration.MsSql2008
-                              .ConnectionString(c => c.Server(server)
-                                                         .Database(name)
-                                                         .Username(username)
-                                                         .Password(password)))
+                .Database(MsSqlConfiguration.MsSql2008
+                    .ConnectionString(c => c.Server(server)
+                        .Database(name)
+                        .Username(username)
+                        .Password(password)))
                 .Mappings(m => m.FluentMappings
-                                   .AddFromAssemblyOf<UserMap>())
+                    .AddFromAssemblyOf<UserMap>())
                 .BuildSessionFactory();
         }
 
@@ -108,10 +97,10 @@ namespace Vortex.Infrastructure.Windsor
         }
 
         private void GetDBConnectionDataFromFile(
-          out string databaseServer,
-          out string databaseName,
-          out string databaseUsername,
-          out string databasePassword)
+            out string databaseServer,
+            out string databaseName,
+            out string databaseUsername,
+            out string databasePassword)
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);

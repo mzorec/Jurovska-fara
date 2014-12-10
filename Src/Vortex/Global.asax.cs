@@ -19,12 +19,10 @@ namespace Vortex
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             var container = new WindsorContainer();
+            container.Install(new VortexInstaller());
             container.Register(FindControllers());
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorCompositionRoot(container));
         }
-
-  
-        
 
         private BasedOnDescriptor FindControllers()
         {
