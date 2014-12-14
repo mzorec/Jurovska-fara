@@ -27,6 +27,20 @@ namespace Vortex.Tests
          
         }
 
+        [Test]
+        public void test()
+        {
+            List<int> seznam = new List<int>();
+            seznam.Add(5);
+            seznam.Add(4);
+          
+            int variabla = 0;
+            for (int i = 0; i < seznam.Count; i++)
+            {
+                variabla = variabla + seznam[i];
+            }
+        }
+
         public Database.Models.User Register(User user)
         {
             user.UserName = "neakj";

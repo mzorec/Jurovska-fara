@@ -1,0 +1,14 @@
+﻿<Configuration>
+  <Loyalty>
+    <HomeDir>d:\Loyalty</HomeDir>
+    <TaskService>
+      <DoNotReinstall>true</DoNotReinstall>
+    </TaskService>
+    <DB>
+      <Server>GEMAJ</Server>
+      <DatabaseName>LOYALITY_MARKO</DatabaseName>
+      <UserName>sa</UserName>
+      <Password>jungle</Password>
+    </DB>    
+  </Loyalty>
+</Configuration>

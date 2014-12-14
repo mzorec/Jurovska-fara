@@ -1,0 +1,1 @@
+packages\cs_script\cscs.exe /verbose /sconfig /c BuildScript\BuildScript.cs %*

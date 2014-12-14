@@ -1,0 +1,1 @@
+cscs /verbose /sconfig /r:System.Core.dll:System.Data.dll DeployScript.cs %1
