@@ -20,3 +20,8 @@ Src/Vortex/obj/Debug/Vortex.pdb
 /Src/Vortex.v11.suo
 /Src/Vortex.Tests/Vortex.Tests.csproj.user
 /Src/Vortex.sln.DotSettings.user
+/Src/BuildScript/bin
+/Src/BuildScript/BuildScript.csproj.user
+/Src/TestResult.xml
+/Src/CommonAssemblyInfo.cs
+/Src/BuildScript/obj
