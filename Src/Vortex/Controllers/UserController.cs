@@ -22,7 +22,7 @@ namespace Vortex.Controllers
         public User Login()
         {
             repositoryFactory.OpenSession();
-            return new User { UserName =  "test " };
+            return new User { UserName = "test " };
         }
     }
 }

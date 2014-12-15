@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using LoyaltyProgram.Console;
 using NHibernate;
 using Vortex.Infrastructure;
 

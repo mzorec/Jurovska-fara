@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using NDesk.Options;
-using Vortex.ConsoleApplication;
 
-namespace LoyaltyProgram.Console
+namespace Vortex.ConsoleApplication
 {
     public class ConsoleApp
     {
-          public ConsoleApp(string[] args, IEnumerable<IConsoleCommand> commands)
+        private readonly string[] args;
+
+        private readonly SortedDictionary<string, IConsoleCommand> commands =
+            new SortedDictionary<string, IConsoleCommand>();
+
+        public ConsoleApp(string[] args, IEnumerable<IConsoleCommand> commands)
         {
             this.args = args;
 
@@ -23,7 +25,7 @@ namespace LoyaltyProgram.Console
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Should be catched")]
         public int Process()
         {
             ShowBanner();
@@ -67,19 +69,19 @@ namespace LoyaltyProgram.Console
             return 1;
         }
 
-        private void AddCommand(IConsoleCommand command)
-        {
-            commands.Add(command.CommandName, command);
-        }
-
         private static void ShowBanner()
         {
             System.Console.Out.WriteLine();
 
             FileVersionInfo version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
-            System.Console.Out.Write("Loyalty.Console v{0}", version.FileVersion);
+            System.Console.Out.Write("Vortex.Console v{0}", version.FileVersion);
             System.Console.Out.WriteLine();
             System.Console.Out.WriteLine();
+        }
+
+        private void AddCommand(IConsoleCommand command)
+        {
+            commands.Add(command.CommandName, command);
         }
 
         private void ShowHelp()
@@ -102,10 +104,5 @@ namespace LoyaltyProgram.Console
                 System.Console.Out.WriteLine("----------------------------------");
             }
         }
-
-        private readonly string[] args;
-
-        private readonly SortedDictionary<string, IConsoleCommand> commands =
-            new SortedDictionary<string, IConsoleCommand>();
     }
 }

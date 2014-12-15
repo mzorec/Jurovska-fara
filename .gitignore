@@ -25,3 +25,6 @@ Src/Vortex/obj/Debug/Vortex.pdb
 /Src/TestResult.xml
 /Src/CommonAssemblyInfo.cs
 /Src/BuildScript/obj
+/Src/Vortex.ConsoleApplication/StyleCop.Cache
+/Src/Vortex.Tests/StyleCop.Cache
+/Src/Vortex/StyleCop.Cache

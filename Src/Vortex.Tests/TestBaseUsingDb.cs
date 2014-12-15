@@ -14,28 +14,30 @@ using Vortex.Infrastructure;
 
 namespace Vortex.Tests
 {
-   public class TestBaseUsingDb
+    public class TestBaseUsingDb
     {
+        protected IRepositoryFactory RepositoryFactory { get; set; }
+
         public ISessionFactory CreateSessionFactory()
         {
             string dbServer, dbName, dbUsername, dbPassword;
             GetDBConnectionDataFromFile(out dbServer, out dbName, out dbUsername, out dbPassword);
             return Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2008
-                              .ConnectionString(c => c.Server(dbServer)
-                                                         .Database(dbName)
-                                                         .Username(dbUsername)
-                                                         .Password(dbPassword)))
+                    .ConnectionString(c => c.Server(dbServer)
+                        .Database(dbName)
+                        .Username(dbUsername)
+                        .Password(dbPassword)))
                 .Mappings(m => m.FluentMappings
-                                   .AddFromAssemblyOf<User>())
-                                   .BuildSessionFactory();
+                    .AddFromAssemblyOf<User>())
+                .BuildSessionFactory();
         }
 
         protected static void GetDBConnectionDataFromFile(
-          out string dbServer,
-          out string dbName,
-          out string dbUsername,
-          out string dbPassword)
+            out string dbServer,
+            out string dbName,
+            out string dbUsername,
+            out string dbPassword)
         {
             const string DataFileName = @"..\..\..\Vortex\DBConnectionData.txt";
 
@@ -66,10 +68,7 @@ namespace Vortex.Tests
             using (ISession session = RepositoryFactory.OpenSession())
             {
                 INhibernateSqlScriptExecutor scriptExecutor = new NhibernateSqlScriptExecutor(session);
-                
             }
-
-            
         }
 
         [TestFixtureTearDown]
@@ -77,8 +76,5 @@ namespace Vortex.Tests
         {
             RepositoryFactory.Dispose();
         }
-
-        protected IRepositoryFactory RepositoryFactory { get; set; }
-      
     }
 }

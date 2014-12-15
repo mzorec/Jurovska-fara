@@ -16,6 +16,8 @@ namespace Vortex.Infrastructure.Windsor
 {
     public class VortexInstaller : IWindsorInstaller
     {
+        private bool disposed;
+
         public VortexInstaller()
         {
             DbConnectionFilePath = "..\\..\\DBConnectionData.txt";
@@ -26,6 +28,27 @@ namespace Vortex.Infrastructure.Windsor
             DbConnectionFilePath = dbConnectionFilePath;
         }
 
+        public string DbConnectionFilePath { get; protected set; }
+
+        public int Order
+        {
+            get { return 10; }
+        }
+
+        private static bool IsInDevelopmentMode
+        {
+            get
+            {
+                string setting = ConfigurationManager.AppSettings["DevelopmentMode"];
+                if (string.IsNullOrWhiteSpace(setting))
+                {
+                    return false;
+                }
+
+                return Convert.ToBoolean(setting, CultureInfo.InvariantCulture);
+            }
+        }
+
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Component.For<ITimeProvider>().ImplementedBy<TimeProvider>());
@@ -34,13 +57,6 @@ namespace Vortex.Infrastructure.Windsor
 
             ISessionFactory nhibernateSessionFactory = CreateSessionFactory(container);
             container.Register(Component.For<ISessionFactory>().Instance(nhibernateSessionFactory));
-        }
-
-        public string DbConnectionFilePath { get; protected set; }
-
-        public int Order
-        {
-            get { return 10; }
         }
 
         public void Dispose()
@@ -66,9 +82,7 @@ namespace Vortex.Infrastructure.Windsor
         private ISessionFactory CreateSessionFactory(IWindsorContainer container)
         {
             string server, name, username, password;
-
-            //log.DebugFormat("development mode: {0}", IsInDevelopmentMode);
-
+            
             GetDBConnectionDataFromFile(out server, out name, out username, out password);
 
             return Fluently.Configure()
@@ -80,20 +94,6 @@ namespace Vortex.Infrastructure.Windsor
                 .Mappings(m => m.FluentMappings
                     .AddFromAssemblyOf<UserMap>())
                 .BuildSessionFactory();
-        }
-
-        private static bool IsInDevelopmentMode
-        {
-            get
-            {
-                string setting = ConfigurationManager.AppSettings["DevelopmentMode"];
-                if (string.IsNullOrWhiteSpace(setting))
-                {
-                    return false;
-                }
-
-                return Convert.ToBoolean(setting, CultureInfo.InvariantCulture);
-            }
         }
 
         private void GetDBConnectionDataFromFile(
@@ -120,7 +120,5 @@ namespace Vortex.Infrastructure.Windsor
                 throw new FileNotFoundException("file not found", pathToFile);
             }
         }
-
-        private bool disposed;
     }
 }

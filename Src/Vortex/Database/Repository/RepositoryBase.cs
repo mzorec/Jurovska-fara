@@ -11,6 +11,8 @@ namespace Vortex.Database.Repository
 {
     public abstract class RepositoryBase<TEntity> where TEntity : EntityBase<TEntity>
     {
+        private ISession session;
+
         protected RepositoryBase(ISession session, ITimeProvider timeProvider)
         {
             if (session == null)
@@ -78,7 +80,5 @@ namespace Vortex.Database.Repository
         {
             session.Delete(this.Get(id));
         }
-
-        private ISession session;
     }
 }

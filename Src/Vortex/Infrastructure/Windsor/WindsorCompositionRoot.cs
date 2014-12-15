@@ -24,7 +24,7 @@ namespace Vortex.Infrastructure.Windsor
             Type controllerType)
         {
             var controller =
-                (IHttpController) this.container.Resolve(controllerType);
+                (IHttpController)this.container.Resolve(controllerType);
 
             request.RegisterForDispose(
                 new Release(

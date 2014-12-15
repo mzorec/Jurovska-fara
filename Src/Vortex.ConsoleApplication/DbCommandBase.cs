@@ -13,6 +13,14 @@ namespace Vortex.ConsoleApplication
 {
     public abstract class DbCommandBase : ConsoleCommandBase
     {
+        private string dbServer;
+
+        private string dbName = null;
+
+        private string dbPassword;
+
+        private string dbUserName;
+
         protected DbCommandBase()
         {
             Options.Add(
@@ -24,6 +32,34 @@ namespace Vortex.ConsoleApplication
                 "u|username=", "the DB {user name} (if not specified readed from config file)", x => dbUserName = x);
             Options.Add(
                 "p|password=", "the DB {user password} (if not specified readed from config file)", x => dbPassword = x);
+        }
+
+        protected string DBServer
+        {
+            get { return dbServer; }
+
+            set { dbServer = value; }
+        }
+
+        protected string DBName
+        {
+            get { return dbName; }
+
+            set { dbName = value; }
+        }
+
+        protected string DBPassword
+        {
+            get { return dbPassword; }
+
+            set { dbPassword = value; }
+        }
+
+        protected string DBUserName
+        {
+            get { return dbUserName; }
+
+            set { dbUserName = value; }
         }
 
         protected ISessionFactory CreateSessionFactory()
@@ -72,65 +108,5 @@ namespace Vortex.ConsoleApplication
             new SchemaExport(config)
                 .SetOutputFile("LatestGeneratedNHScript.sql").Execute(false, false, false);
         }
-
-       protected string DBServer
-       {
-           get
-           {
-               return dbServer;
-           }
-
-           set
-           {
-               dbServer = value;
-           }
-       }
-
-        protected string DBName
-       {
-           get
-           {
-               return dbName;
-           }
-
-           set
-           {
-               dbName = value;
-           }
-       }
-
-       protected string DBPassword
-       {
-           get
-           {
-               return dbPassword;
-           }
-
-           set
-           {
-               dbPassword = value;
-           }
-       }
-
-       protected string DBUserName
-       {
-           get
-           {
-               return dbUserName;
-           }
-
-           set
-           {
-               dbUserName = value;
-           }
-       }
-
-       private string dbServer;
-
-       private string dbName = null;
-
-       private string dbPassword;
-
-       private string dbUserName;
     }
 }

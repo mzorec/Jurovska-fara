@@ -16,7 +16,7 @@ namespace Vortex.Tests
         [Test]
         public void SuccessDavcnaTest()
         {
-           var model =  Register(new User() { Davcna = "5"});
+           var model = Register(new User() { Davcna = "5" });
             Assert.AreEqual(5, model.Davcna);
         }
 
@@ -24,11 +24,10 @@ namespace Vortex.Tests
         public void WrongDavcnaFormat()
         {
             var model = Register(new User() { Davcna = "aa" });
-         
         }
 
         [Test]
-        public void test()
+        public void Test()
         {
             List<int> seznam = new List<int>();
             seznam.Add(5);
@@ -56,6 +55,5 @@ namespace Vortex.Tests
 
             return dbUserModel;
         }
-
     }
 }

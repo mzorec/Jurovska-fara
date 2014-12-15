@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Vortex.Tests.Learning
 {
-
-
     public class Calculator : ICalculator
     {
-
         public int Calculate(string a)
         {
-
             if (a.Contains("+"))
             {
                 string[] delimiter = new string[] { "+" };
@@ -24,11 +15,11 @@ namespace Vortex.Tests.Learning
                 {
                     result = result + int.Parse(content[i]);
                 }
-                //string firstt = content[0];
-                //string secondt = content[1];
-                //int first = int.Parse(firstt);
-                //int second = int.Parse(secondt);
-                //int result = first + second;
+                ////string firstt = content[0];
+                ////string secondt = content[1];
+                ////int first = int.Parse(firstt);
+                ////int second = int.Parse(secondt);
+                ////int result = first + second;
                 return result;
             }
             else
@@ -36,7 +27,5 @@ namespace Vortex.Tests.Learning
                 return 0;
             }
         }
-
-
     }
 }

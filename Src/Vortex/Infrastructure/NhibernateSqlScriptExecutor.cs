@@ -7,6 +7,8 @@ namespace Vortex.Infrastructure
 {
     public class NhibernateSqlScriptExecutor : INhibernateSqlScriptExecutor
     {
+        private readonly ISession session;
+
         public NhibernateSqlScriptExecutor(ISession session)
         {
             this.session = session;
@@ -46,7 +48,5 @@ namespace Vortex.Infrastructure
                 }
             }
         }
-
-        private readonly ISession session;
     }
 }

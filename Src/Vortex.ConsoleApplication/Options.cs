@@ -118,6 +118,15 @@ namespace NDesk.Options
     using System.Text;
     using System.Text.RegularExpressions;
 
+    public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
+
+    public enum OptionValueType
+    {
+        None,
+        Optional,
+        Required,
+    }
+
     public class OptionValueCollection : IList, IList<string>
     {
         private readonly List<string> values = new List<string>();
@@ -127,6 +136,19 @@ namespace NDesk.Options
         internal OptionValueCollection(OptionContext c)
         {
             this.c = c;
+        }
+
+        object IList.this[int index]
+        {
+            get
+            {
+                return this[index];
+            }
+
+            set
+            {
+                (values as IList)[index] = value;
+            }
         }
 
         #region ICollection
@@ -257,19 +279,6 @@ namespace NDesk.Options
             }
         }
 
-        object IList.this[int index]
-        {
-            get
-            {
-                return this[index];
-            }
-
-            set
-            {
-                (values as IList)[index] = value;
-            }
-        }
-
         #endregion
 
         #region IList<T>
@@ -375,13 +384,6 @@ namespace NDesk.Options
                 return c;
             }
         }
-    }
-
-    public enum OptionValueType
-    {
-        None, 
-        Optional, 
-        Required, 
     }
 
     public abstract class Option
@@ -704,10 +706,12 @@ namespace NDesk.Options
         }
     }
 
-    public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
-
     public class OptionSet : KeyedCollection<string, Option>
     {
+        private readonly Converter<string, string> localizer;
+
+        private readonly Regex valueOption = new Regex(@"^(?<flag>--|-|/)(?<name>[^:=]+)((?<sep>[:=])(?<value>.*))?$");
+
         public OptionSet()
             : this(delegate(string f) { return f; })
         {
@@ -717,8 +721,6 @@ namespace NDesk.Options
         {
             this.localizer = localizer;
         }
-
-        private readonly Converter<string, string> localizer;
 
         public Converter<string, string> MessageLocalizer
         {
@@ -822,27 +824,6 @@ namespace NDesk.Options
             return this;
         }
 
-        private sealed class ActionOption : Option
-        {
-            private readonly Action<OptionValueCollection> action;
-
-            public ActionOption(string prototype, string description, int count, Action<OptionValueCollection> action)
-                : base(prototype, description, count)
-            {
-                if (action == null)
-                {
-                    throw new ArgumentNullException("action");
-                }
-
-                this.action = action;
-            }
-
-            protected override void OnParseComplete(OptionContext c)
-            {
-                action(c.OptionValues);
-            }
-        }
-
         public OptionSet Add(string prototype, Action<string> action)
         {
             return Add(prototype, null, action);
@@ -876,48 +857,6 @@ namespace NDesk.Options
                 prototype, description, 2, delegate(OptionValueCollection v) { action(v[0], v[1]); });
             base.Add(p);
             return this;
-        }
-
-        private sealed class ActionOption<T> : Option
-        {
-            private readonly Action<T> action;
-
-            public ActionOption(string prototype, string description, Action<T> action)
-                : base(prototype, description, 1)
-            {
-                if (action == null)
-                {
-                    throw new ArgumentNullException("action");
-                }
-
-                this.action = action;
-            }
-
-            protected override void OnParseComplete(OptionContext c)
-            {
-                action(Parse<T>(c.OptionValues[0], c));
-            }
-        }
-
-        private sealed class ActionOption<TKey, TValue> : Option
-        {
-            private readonly OptionAction<TKey, TValue> action;
-
-            public ActionOption(string prototype, string description, OptionAction<TKey, TValue> action)
-                : base(prototype, description, 2)
-            {
-                if (action == null)
-                {
-                    throw new ArgumentNullException("action");
-                }
-
-                this.action = action;
-            }
-
-            protected override void OnParseComplete(OptionContext c)
-            {
-                action(Parse<TKey>(c.OptionValues[0], c), Parse<TValue>(c.OptionValues[1], c));
-            }
         }
 
         public OptionSet Add<T>(string prototype, Action<T> action)
@@ -1025,8 +964,6 @@ namespace NDesk.Options
             c.Option.Invoke(c);
             return false;
         }
-
-        private readonly Regex valueOption = new Regex(@"^(?<flag>--|-|/)(?<name>[^:=]+)((?<sep>[:=])(?<value>.*))?$");
 
         protected bool GetOptionParts(
             string argument, out string flag, out string name, out string sep, out string value)
@@ -1487,6 +1424,69 @@ namespace NDesk.Options
             }
 
             return sep;
+        }
+
+        private sealed class ActionOption : Option
+        {
+            private readonly Action<OptionValueCollection> action;
+
+            public ActionOption(string prototype, string description, int count, Action<OptionValueCollection> action)
+                : base(prototype, description, count)
+            {
+                if (action == null)
+                {
+                    throw new ArgumentNullException("action");
+                }
+
+                this.action = action;
+            }
+
+            protected override void OnParseComplete(OptionContext c)
+            {
+                action(c.OptionValues);
+            }
+        }
+
+        private sealed class ActionOption<TKey, TValue> : Option
+        {
+            private readonly OptionAction<TKey, TValue> action;
+
+            public ActionOption(string prototype, string description, OptionAction<TKey, TValue> action)
+                : base(prototype, description, 2)
+            {
+                if (action == null)
+                {
+                    throw new ArgumentNullException("action");
+                }
+
+                this.action = action;
+            }
+
+            protected override void OnParseComplete(OptionContext c)
+            {
+                action(Parse<TKey>(c.OptionValues[0], c), Parse<TValue>(c.OptionValues[1], c));
+            }
+        }
+
+        private sealed class ActionOption<T> : Option
+        {
+            private readonly Action<T> action;
+
+            public ActionOption(string prototype, string description, Action<T> action)
+                : base(prototype, description, 1)
+            {
+                if (action == null)
+                {
+                    throw new ArgumentNullException("action");
+                }
+
+                this.action = action;
+            }
+
+            protected override void OnParseComplete(OptionContext c)
+            {
+                action(Parse<T>(c.OptionValues[0], c));
+            }
         }
     }
 }

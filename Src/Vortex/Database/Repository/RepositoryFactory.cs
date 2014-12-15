@@ -11,8 +11,7 @@ namespace Vortex.Database.Repository
 {
     public class RepositoryFactory : IRepositoryFactory
     {
-
-        private static readonly ILog log = LogManager.GetLogger(typeof (RepositoryFactory));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(RepositoryFactory));
 
         private readonly Dictionary<int, ISession> currentSessions = new Dictionary<int, ISession>();
 
@@ -28,11 +27,6 @@ namespace Vortex.Database.Repository
             this.timeProvider = timeProvider;
         }
 
-        private static int CurrentThreadId
-        {
-            get { return Thread.CurrentThread.ManagedThreadId; }
-        }
-
         public ISession CurrentSession
         {
             get
@@ -42,6 +36,11 @@ namespace Vortex.Database.Repository
                     return this.currentSessions[CurrentThreadId];
                 }
             }
+        }
+
+        private static int CurrentThreadId
+        {
+            get { return Thread.CurrentThread.ManagedThreadId; }
         }
 
         public void Dispose()
@@ -85,14 +84,14 @@ namespace Vortex.Database.Repository
                     currentSession != null,
                     this.currentSessions != null);
                 Console.Error.WriteLine(message);
-                log.FatalFormat("XYZ: {0}", message);
+                Log.FatalFormat("XYZ: {0}", message);
                 throw;
             }
 
-            var sessionImpl = (SessionImpl) currentSession;
-            if (log.IsDebugEnabled)
+            var sessionImpl = (SessionImpl)currentSession;
+            if (Log.IsDebugEnabled)
             {
-                log.DebugFormat("OpenSession (session Id = {0})", sessionImpl.SessionId);
+                Log.DebugFormat("OpenSession (session Id = {0})", sessionImpl.SessionId);
             }
 
             return currentSession;
@@ -116,9 +115,9 @@ namespace Vortex.Database.Repository
                         {
                             if (sessionData.Value != null && sessionData.Value.IsOpen)
                             {
-                                log.WarnFormat(
+                                Log.WarnFormat(
                                     "You haven't closed the session {0} on thread {1} before disposing RepositoryFactory",
-                                    ((SessionImpl) sessionData.Value).SessionId,
+                                    ((SessionImpl)sessionData.Value).SessionId,
                                     sessionData.Key);
                             }
                         }
@@ -128,8 +127,6 @@ namespace Vortex.Database.Repository
 
                 this.disposed = true;
             }
-
-
         }
     }
 }
