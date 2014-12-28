@@ -14,19 +14,6 @@ namespace Vortex.Tests
     public class ExampleTests
     {
         [Test]
-        public void SuccessDavcnaTest()
-        {
-           var model = Register(new User() { Davcna = "5" });
-            Assert.AreEqual(5, model.Davcna);
-        }
-
-        [Test]
-        public void WrongDavcnaFormat()
-        {
-            var model = Register(new User() { Davcna = "aa" });
-        }
-
-        [Test]
         public void Test()
         {
             List<int> seznam = new List<int>();
@@ -38,22 +25,6 @@ namespace Vortex.Tests
             {
                 variabla = variabla + seznam[i];
             }
-        }
-
-        public Database.Models.User Register(User user)
-        {
-            user.UserName = "neakj";
-
-            Database.Models.User dbUserModel = new Database.Models.User();
-            dbUserModel.Username = user.UserName;
-            dbUserModel.Email = user.Email;
-            int davcna;
-            if (int.TryParse(user.Davcna, out davcna))
-            {
-                dbUserModel.Davcna = davcna;
-            }
-
-            return dbUserModel;
         }
     }
 }
